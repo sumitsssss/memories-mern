@@ -3,8 +3,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const postRouter = require("./Routes/post");
-const bodyParser = require('body-parser');
-const { json } = require("express");
 
 const app = express();
 
@@ -25,8 +23,7 @@ const connectdb = async () => {
 
 connectdb().catch((error) => console.error(error));
 
-app.use(bodyParser.json({limit:'30mb', extended: true}))
-app.use(bodyParser.urlencoded({limit: '30mb', extended: true}));
+app.use(express.json({ limit: "30mb" }));  //Global MiddleWare
 app.use(cors());
 app.use("/posts", postRouter); //Post Route
 
@@ -35,4 +32,3 @@ app.use("/posts", postRouter); //Post Route
 // });
 const port = 5000 || process.env.PORT;
 app.listen(port, () => console.log("Server up and running at port 5000."));
-
